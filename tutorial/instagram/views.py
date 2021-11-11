@@ -3,7 +3,7 @@ from .models import Post
 
 # Create your views here.
 def post_list(request):
-    qs = Post.object.all()
+    qs = Post.objects.all()
     q = request.GET.get('q','')
     if q:
         qs = qs.filter(message__icontains=q)

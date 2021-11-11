@@ -1,8 +1,10 @@
+**/settings.py
+tutorial/tutorial/settings.py
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
-
+**/settings.py
 # C extensions
 *.so
 
@@ -112,3 +114,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+tutorial/tutorial/settings.py
