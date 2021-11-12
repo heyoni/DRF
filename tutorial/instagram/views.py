@@ -16,7 +16,6 @@ def post_list(request):
         'q':q
     })
 
-
 # def post_detail(request: HttpRequest, pk: int) -> HttpResponse:
 #     # try:
 #     #     post = get_object_or_404(Post, pk=pk)
