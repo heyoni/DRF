@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import Post, Comment, Admin
+from .models import Post, Comment, Tag
+from django.utils.safestring import mark_safe
 
-# Register your models here.
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ['id', 'photo_tag', 'message', 'message_length', 'is_public', 'created_at', 'updated_at']
@@ -27,3 +28,4 @@ class CommentAdmin(admin.ModelAdmin):
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     pass
+

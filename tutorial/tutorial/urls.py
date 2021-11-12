@@ -5,7 +5,7 @@ from tutorial.quickstart import views
 import debug_toolbar
 from django.conf import settings
 from django.conf.urls.static import static
-
+from django.views.generic import TemplateView
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
@@ -16,9 +16,11 @@ router.register(r'groups', views.GroupViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('', include('instagram.urls')),
+    # path('', include('instagram.urls')),
     path('instagram/', include('instagram.urls')),
     path('accounts/',include('accounts.urls')),
+    path('', TemplateView.as_view(template_name='root.html'), name='root')
+
 ]
 
 
