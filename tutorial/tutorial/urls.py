@@ -19,7 +19,8 @@ urlpatterns = [
     # path('', include('instagram.urls')),
     path('instagram/', include('instagram.urls')),
     path('accounts/',include('accounts.urls')),
-    path('', TemplateView.as_view(template_name='root.html'), name='root')
+    path('', TemplateView.as_view(template_name='root.html'), name='root'),
+    path('', RedirectView.as_view(template_name='root.html'), name='root'),
 
 ]
 
