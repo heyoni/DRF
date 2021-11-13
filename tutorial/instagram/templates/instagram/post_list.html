@@ -1,3 +1,4 @@
+{% load bootstrap4 %}
 <!DOCTYPE html>
 <html lang="kr">
 <head>
@@ -17,11 +18,16 @@
             {% for post in post_list %}
                 <tr>
                     <td>
-                        {{post.message}}
+                        {{ post.pk }}
+                    </td>
+                    <td>
+                        {{ post.message }}
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    {{ page_obj }}
+    {% bootstrap_pagination page_obj %}
 </body>
 </html>
