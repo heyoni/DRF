@@ -1,21 +1,35 @@
 from django.db import models
 from django.shortcuts import render
+from django.views.generic.dates import YearArchiveView
 from .models import Post
 from django.http import HttpResponse, HttpRequest, Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.generic import DetailView, ListView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ArchiveIndexView
 
-
-def post_list(request):
-    qs = Post.objects.all()
-    q = request.GET.get('q','')
-    if q:
-        qs = qs.filter(message__icontains=q)
+# def post_list(request):
+#     qs = Post.objects.all()
+#     q = request.GET.get('q','')
+#     if q:
+#         qs = qs.filter(message__icontains=q)
     
-    return render(request, 'instagram/post_list.html', {
-        'post_list' : qs,
-        'q':q
-    })
+#     return render(request, 'instagram/post_list.html', {
+#         'post_list' : qs,
+#         'q':q
+#     })
+
+# 장식자 입히기
+# @method_decorator(login_required, name='dispatch')
+# class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView): #이렇게 더 많이 씀
+    model = Post
+    pagination_by = 10
+
+post_list = PostListView.as_view()
+
 
 # def post_detail(request: HttpRequest, pk: int) -> HttpResponse:
 #     # try:
@@ -51,3 +65,8 @@ class PostDetailView(DetailView):
         return qs
 post_detail = PostDetailView.as_view(model=Post)
 post_list = ListView.as_view(model=Post, paginate_by=10)
+
+
+post_archive = ArchiveIndexView.as_view(model=Post, date_field='created_at')
+
+post_archive_year = YearArchiveView.as_view(model=Post, date_field='created_at',make_object_list=True)
