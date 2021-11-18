@@ -114,5 +114,15 @@ def post_edit(request, pk):
 
     return render(request, 'instagram/post_form.html', {
         'form': form,
-        # 'post': post,
+        'post': post,
     })
+
+
+
+# # settings에 추가
+# from django.contrib.messages import constants as messages_constants
+
+# MESSAGE_TAGS = {
+#     messages_constants.DEBUG = 'secondary',
+#     messages_constants.ERROR = 'danger'
+# }
