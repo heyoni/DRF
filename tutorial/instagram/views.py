@@ -119,6 +119,18 @@ def post_edit(request, pk):
 
 
 
+@login_required
+def post_delete(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    # 삭제 확인(confirm form)을 보여주고 -> get요청, 삭제 -> post
+    if request.method == 'POST':
+        post.delete()
+        messages.success(request, '포스트를 삭제했습니다.')
+        return redirect('instagram:post_list')
+    return render(request, 'instagram/post_confirm_delete.html',{
+        'post': post,
+    })
+
 # # settings에 추가
 # from django.contrib.messages import constants as messages_constants
 

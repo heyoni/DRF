@@ -21,6 +21,7 @@ urlpatterns = [
     path('accounts/',include('accounts.urls')),
     path('', TemplateView.as_view(template_name='root.html'), name='root'),
     # path('', RedirectView.as_view(template_name='root.html'), name='root'),
+    path('quiz/', include('quiz.urls')),
 
 ]
 
