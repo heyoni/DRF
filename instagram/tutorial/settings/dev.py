@@ -1,0 +1,1 @@
+from .common import * # 안티패턴이지만 setting에서만 예외
