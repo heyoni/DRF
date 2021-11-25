@@ -17,12 +17,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.views.generic import RedirectView, TemplateView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path('', TemplateView.as_view(template_name='root.html'), name='root'),
+    path('', login_required(TemplateView.as_view(template_name='root.html')), name='root'),
+    # 패턴에 매칭되지 않고 모든 경우를 감싸는 view는 re_path 사용
+    # re_path('', TemplateView.as_view(template_name='root.html'), name='root'),
+
+    path('accounts/', include('accounts.urls')),
+
 ]
 
 if settings.DEBUG:
