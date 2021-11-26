@@ -1,6 +1,7 @@
 from .models import User
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth import get_user_model
 
 
 class SignupForm(UserCreationForm):
@@ -29,3 +30,9 @@ class SignupForm(UserCreationForm):
             if qs.exists():
                 raise forms.ValidationError("이미 등록된 이메일 주소입니다.")
         return email
+
+
+class EditForm(UserChangeForm):
+    class Meta:
+        model = get_user_model()
+        fields = ['first_name','last_name','bio', 'website_url']
