@@ -1,8 +1,11 @@
 from .models import User
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import (
+    UserCreationForm, UserChangeForm, PasswordChangeForm as AuthPasswordChangeForm
+    )
 from django.contrib.auth import get_user_model
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 
 class SignupForm(UserCreationForm):
     # UserCreationForm 쓰기전
@@ -32,7 +35,23 @@ class SignupForm(UserCreationForm):
         return email
 
 
-class EditForm(UserChangeForm):
+# class EditForm(UserChangeForm):
+#     class Meta:
+#         model = get_user_model()
+#         fields = ['first_name','last_name','picture','bio', 'website_url','phone_number','gender']
+
+class EditForm(forms.ModelForm):
     class Meta:
-        model = get_user_model()
-        fields = ['first_name','last_name','bio', 'website_url']
+        model = User
+        fields = ['first_name','last_name','picture','bio', 'website_url','phone_number','gender']
+
+
+class PasswordChangeForm(AuthPasswordChangeForm):
+    def clean_new_password1(self):
+        old_password = self.cleaned_data.get('old_password')
+        new_password1 = self.cleaned_data.get('new_password1')
+        if old_password and new_password1:
+            if old_password == new_password1:
+                raise forms.ValidationError("새로운 암호는 기존 암호과 다르게 입력해주세요.")
+        return new_password1
+

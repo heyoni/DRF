@@ -24,6 +24,8 @@ from django_pydenticon.views import image as pydenticon_image
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', login_required(TemplateView.as_view(template_name='root.html')), name='root'),
+    # path('', login_required(pattern_name='instagram:index'), name='root'),
+
     # 패턴에 매칭되지 않고 모든 경우를 감싸는 view는 re_path 사용
     # re_path('', TemplateView.as_view(template_name='root.html'), name='root'),
 

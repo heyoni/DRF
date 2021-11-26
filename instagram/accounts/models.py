@@ -12,6 +12,6 @@ class User(AbstractUser):
 
     website_url = models.URLField(blank=True)
     bio = models.TextField(blank=True)
-    phone_nuber =models.CharField(validators=[RegexValidator(r"^010-?[1-9]\d{3}-?d{4}$")],max_length=13)
+    phone_number =models.CharField(validators=[RegexValidator(r"^010-?[1-9]\d{3}-?d{4}$")],max_length=13)
     gender = models.CharField(choices=GenderChoices.choices, max_length=1)
-    
+    picture = models.ImageField(blank=True, upload_to="accounts/profile/%Y/%m/%d")
