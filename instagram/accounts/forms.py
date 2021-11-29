@@ -55,3 +55,4 @@ class PasswordChangeForm(AuthPasswordChangeForm):
                 raise forms.ValidationError("새로운 암호는 기존 암호과 다르게 입력해주세요.")
         return new_password1
 
+ 
