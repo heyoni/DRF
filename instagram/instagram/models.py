@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 import re
 
 class Post(models.Model):
@@ -12,17 +13,18 @@ class Post(models.Model):
     def __str__(self):
         return self.caption
 
-    # def get_absolute_url(self):
-    #     return reverse("model_detail", kwargs={"pk": self.pk})
-
     def extract_tag_list(self):
         tag_name_list = re.findall(r"#([a-zA-z\dㄱ-힣]+)", self.caption)
         tag_list = []
         for tag_name in tag_name_list:
-            tag, _ = Tag.objects.get_or_create(name = tag_name,)
+            tag, _ = Tag.objects.get_or_create(name = tag_name)
             tag_list.append(tag)
         return tag_list
     
+    def get_absolute_url(self):
+        return reverse("instagram:post_detail", args=[self.pk])
+
+
 
 #보통 태그는 taggit 사용
 class Tag(models.Model):

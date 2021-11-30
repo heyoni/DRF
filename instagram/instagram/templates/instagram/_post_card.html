@@ -1,0 +1,25 @@
+{% extends "instagram/layout.html" %}
+
+
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        <img src="{{ post.author.profile_picture_url }}" style="width: 32px; height: 32px;" />
+        <a href="{% url 'instagram:user_page' post.author.username %}">
+            {{ post.author.name }}
+        </a>
+    </div>
+    <div class="card-body">
+        <img src="{{ post.photo.url }}" style="width: 100%;" />
+    </div>
+    <div class="card_footer">
+        여기여기~!~
+        {% for tag in post.tag_set.all %}
+            <span class="badge bg-primary">
+                #{{ tag.name }}
+            </span>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
