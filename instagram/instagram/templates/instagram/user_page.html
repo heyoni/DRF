@@ -16,6 +16,12 @@
                 {{ post_list_count }} posts, {} followers, {} following
                 <hr>
                 {{ page_user.name }}
+                
+                {% if is_follow %}
+                    <a href="{% url "user_unfollow" page_user.username %}">Unfollow</a>
+                {% else %}
+                    <a href="{% url "user_follow" page_user.username %}">Follow</a>
+                {% endif %}
             </div>
         </div>
         <div class="row mt-3">

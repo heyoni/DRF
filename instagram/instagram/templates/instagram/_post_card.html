@@ -1,25 +1,66 @@
-{% extends "instagram/layout.html" %}
-
-
+{% load bootstrap5 humanize instagram_tags %}
 {% block content %}
 
 <div class="card">
-    <div class="card-header">
-        <img src="{{ post.author.profile_picture_url }}" style="width: 32px; height: 32px;" />
-        <a href="{% url 'instagram:user_page' post.author.username %}">
-            {{ post.author.name }}
-        </a>
+    <div class="card-header d-flex">
+        <div class="mt-2">
+            <a href="{% url 'instagram:user_page' post.author.username %}">
+                <img src="{{ post.author.profile_picture_url }}" style="width: 32px; height: 32px;" class="rounded-circle"/>
+            </a>
+        </div>
+        <div class="ms-2">
+            <a href="{% url 'instagram:user_page' post.author.username %}">
+                <div>
+                    {{ post.author.username }}
+                </div>
+            </a>
+
+            <small>
+                {% if post.location %}
+                    <small>{{ post.location }}</small>
+                {% endif %}
+            </small>
+        </div>
     </div>
     <div class="card-body">
         <img src="{{ post.photo.url }}" style="width: 100%;" />
+        {% if post|is_like_user:user %}
+            <a href="{% url 'instagram:post_unlike' post.pk %}" style="color: inherit;">
+                <i class="fa fa-heart"></i>
+            </a>
+        {% else %}
+            <a href="{% url 'instagram:post_like' post.pk %}" style="color: inherit;">
+                <i class="fa fa-heart-o"></i>
+            </a>
+        {% endif %}
+        <div class="comment-list">
+            {% for comment in post.comment_set.all %}
+            <div class="comment">
+                <strong>{{ comment.author }}</strong>
+                {{ comment.message }}
+                <small class="text-muted">{{ comment.created_at|naturaltime }}</small>
+            </div>
+            {% endfor %}
+        </div>
+        <div>
+            {% for tag in post.tag_set.all %}
+                <span class="badge bg-primary">
+                    #{{ tag.name }}
+                </span>
+            {% endfor %}
+        </div>
+        <a href="{{ post.get_absolute_url }}" style="text-decoration:none" class="text-muted">
+            <small>
+                {{ post.created_at|naturaltime }}
+            </small>
+        </a>
     </div>
-    <div class="card_footer">
-        여기여기~!~
-        {% for tag in post.tag_set.all %}
-            <span class="badge bg-primary">
-                #{{ tag.name }}
-            </span>
-        {% endfor %}
+    <div class="card-footer">
+        <form method="POST" action="{% url 'instagram:comment_new' post.pk %}">
+            {% csrf_token %}
+            {% bootstrap_form comment_form %}
+            <input type="submit" value="댓글 쓰기" class="btn btn-primary btn-block" />
+        </form>
     </div>
 </div>
 {% endblock %}

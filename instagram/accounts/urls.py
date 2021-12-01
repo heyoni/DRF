@@ -9,8 +9,9 @@ urlpatterns=[
     path('edit/',views.edit, name='profile_edit'),
     path('password_change/',auth_views.PasswordChangeView.as_view(), name='password_change'),
 
-    re_path(r'^(?P<username>[\w.@+-]+)/$', views.user_follow, name='user_follow'),
-    re_path(r'^(?P<username>[\w.@+-]+)/$', views.user_unfollow, name='user_unfollow'),
+    re_path(r'^(?P<username>[\w.@+-]+)/follow/$', views.user_follow, name='user_follow'),
+    re_path(r'^(?P<username>[\w.@+-]+)/unfollow/$', views.user_unfollow, name='user_unfollow'),
+
 
     
 
